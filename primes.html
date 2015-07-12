@@ -51,6 +51,7 @@ body {
 <div id="slider"></div>
 <button id="toggleShowComposites">Toggle Showing Composites</button>
 <button id="toggleShowPrimes">Toggle Showing Primes</button>
+<label>count to: <input type="text" id="numberinput" value="100"> </label>
 </div>
 <h2> Slide to change elements per row </h2>
 
@@ -67,14 +68,14 @@ body {
 var primesEl = document.getElementById("primes");
 var primes = [];
 var isPrime = true;
-var numberOfPrimes = 10000;
+var numberOfPrimes = 100;
 var base = 8;
 var showPrimes = true;
 var showComposites = true;
 var lineWrapper = document.createElement('div');
 var writeNumbers = function(){
 	primesEl.innerHTML='';
-	for(var i = 1; i < numberOfPrimes; i++){
+	for(var i = 0; i < numberOfPrimes; i++){
 		if(i % base == 1){
 			lineWrapper = document.createElement('div');
 			lineWrapper.setAttribute('class', 'line');
@@ -91,19 +92,21 @@ var writeNumbers = function(){
 				isPrime = false;	
 			}
 		}
+		var el = document.createElement('p');
+
+			
 		if(isPrime){
 			primes.push(i);
-			var el = document.createElement('p');
 			el.setAttribute('class','number prime ' + (showPrimes ? '' : 'hidden'));
-			el.innerHTML=i;
-			lineWrapper.appendChild(el);
 		}
 		else{
-			var el = document.createElement('p');
 			el.setAttribute('class','number composite ' + (showComposites ? '' : 'hidden'));
-			el.innerHTML=i;
-			lineWrapper.appendChild(el);
 		}
+		//var mlog = Math.log(i)/Math.log(base);
+		//var loground = Math.round(mlog);
+		//el.innerHTML=Math.pow(i, mlog);
+		el.innerHTML=i;
+		lineWrapper.appendChild(el);
 		isPrime = true;
 	}
 };
@@ -121,6 +124,10 @@ $("#slider").on("slide", function( event, ui ){
 $("#toggleShowPrimes").button();
 $("#toggleShowPrimes").on("click", function( event, ui ) {
 	showPrimes = showPrimes ? false : true;
+	writeNumbers();
+});
+$("#numberinput").change(function(){
+	numberOfPrimes = parseInt($("#numberinput").val());
 	writeNumbers();
 });
 
