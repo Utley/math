@@ -8,8 +8,8 @@ var primesTo = function(n){
       if(i % primes[j] == 0){
         prime = false;
         break;
-      }  
-    } 
+      }
+    }
     //console.log("Checking "+i+"...");
     if(prime){
       //console.log(i+" is prime!");
@@ -22,7 +22,7 @@ var primesTo = function(n){
 var differences = function(arr){
   var diffs = [];
   for(var i=1; i<arr.length; i++){
-    diffs.push(arr[i]-arr[i-1]); 
+    diffs.push(arr[i]-arr[i-1]);
   }
   return diffs;
 };
@@ -35,8 +35,6 @@ var average = function(arr){
   }
   return sum/arr.length;
 };
-
-
 
 console.log(primesTo(100));
 console.log(differences(primesTo(100)));
