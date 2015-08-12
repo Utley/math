@@ -36,7 +36,10 @@ var average = function(arr){
   return sum/arr.length;
 };
 
-console.log(primesTo(100));
-console.log(differences(primesTo(100)));
-console.log(average(differences(primesTo(100))));
-console.log(average(differences(primesTo(1000))));
+var compare = function(f1,f2,n){
+  for(var i = 0; i < n; i++){
+    console.log(f1(i) + ":" + f2(i));
+  }
+};
+
+compare(primesTo,function(n){ return differences(primesTo(n))},100);
