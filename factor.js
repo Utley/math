@@ -1,0 +1,3 @@
+var factor = function( num ){
+  
+};

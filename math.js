@@ -32,6 +32,27 @@ var average = function(arr){
   return sum/arr.length;
 };
 
+var range = function(num){
+  var start;
+  var end;
+  var values = [];
+  if(arguments[1]){
+    start=arguments[0];
+    end = arguments[1];
+  }
+  if(start >= num){
+    console.log("error");
+    return;
+  }
+  else{
+    start=0;
+  }
+  do{
+    values.push(start++);
+  }
+  while(start < num);
+  return values;
+}
 
 //compares two functions for the first n values (staritng at 0)
 var compare = function(f1,f2,n){
@@ -52,8 +73,8 @@ var Series = function(){
       this.data.push(f(i));
     }
   };
-  //bind relevant functions here
 };
-var a = new Series();
-a.create(primesTo,20);
-console.log(a.data);
+// var a = new Series();
+// a.create(primesTo,20);
+// console.log(a.data);
+console.log(range(200,203));
