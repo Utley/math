@@ -1,66 +1,8 @@
 <html>
 <head>
-<style>
-#input{
-  display: inline-block;
-  width:200px;
-  height: 100%;
-  border: 3px solid white;
-  background-color: black;
-}
-
-.button{
-  width: 20px;
-  display: inline-block;
-  height: 20px;
-  border: 2px solid white;
-  box-shadow: 2px 2px 2px grey;
-  margin: 10px;
-  padding: 10px;
-  color: white;
-  text-align: center;
-}
-
-.special{
-  display: inline-block;
-  position: relative;
-  width: 50%;
-  box-sizing: border-box;
-
-}
-
-#graph{
-  display: inline-block;
-  
-  border: 2px solid black;
-}
-</style>
-
 </head>
 <body>
-<div id="input">
-<div class="button">1</div>
-<div class="button">2</div>
-<div class="button">3</div>
-<div class="button">4</div>
-<div class="button">5</div>
-<div class="button">6</div>
-<div class="button">7</div>
-<div class="button">8</div>
-<div class="button">9</div>
-<div class="button special">asdf</div>
-
-</div>
-<canvas id="graph">
-
-
-
-</div>
+<canvas id="graph"></canvas> 
 <script src="graph.js"></script>
-<script>
-var canvas = document.getElementById("graph");
-var ctx = canvas.getContext('2d');
-
-</script>
 </body>
 </html>

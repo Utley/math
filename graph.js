@@ -1,7 +1,7 @@
 var canvas = document.getElementById("graph");
 var ctx = canvas.getContext('2d');
-canvas.width = 800;
-canvas.height= 800;
+canvas.width = window.innerWidth-50;
+canvas.height= window.innerHeight-50; //account for default padding/margin
 
 var getPoints = function(f){
   if(typeof f != "function"){
