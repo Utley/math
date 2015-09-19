@@ -11,6 +11,8 @@
 var uinput = document.getElementById("eq");
 uinput.addEventListener("change", function(){
   var text = document.getElementById("eq").value;
+  console.log(getPoints(parse(text)));
+  makeGraph(getPoints(parse(text)));
 });
 
 </script>
