@@ -20,6 +20,7 @@ var makeGraph = function(arr){
   var offset = canvas.width/2;
   var scale = 4;
   ctx.lineWidth = 1;
+  ctx.moveTo(scale*(arr[0][0])+offset,canvas.height-arr[0][1]);
   for(var i in arr){
     ctx.lineTo(scale*(arr[i][0])+offset,canvas.height-arr[i][1]);
     ctx.stroke();

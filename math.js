@@ -73,13 +73,11 @@ var Series = function(){
       this.data.push(f(i));
     }
   };
-<<<<<<< HEAD:math.js
 };
 // var a = new Series();
 // a.create(primesTo,20);
 // console.log(a.data);
 console.log(range(200,203));
-=======
   this.average = function(){
     var sum=0;
     for(var i in this.data){
@@ -92,4 +90,3 @@ var a = new Series();
 a.create(primesTo,20);
 console.log(a.data);
 console.log(a.average());
->>>>>>> eebb8a03465e22c79c647de425ddefaca41a9ae9:math.js
