@@ -60,33 +60,3 @@ var compare = function(f1,f2,n){
     console.log(f1(i) + ":" + f2(i));
   }
 };
-
-//compare(primesTo,function(n){ return differences(primesTo(n))},100);
-
-var Series = function(){
-  //series is an object representing a set of values
-  //it is initialized with a create() call
-  //where f is the function and n is the number of values (starting at 0)
-  this.data = [];
-  this.create = function( f, n ){
-    for(var i = 0; i < n; i++){
-      this.data.push(f(i));
-    }
-  };
-};
-// var a = new Series();
-// a.create(primesTo,20);
-// console.log(a.data);
-console.log(range(200,203));
-  this.average = function(){
-    var sum=0;
-    for(var i in this.data){
-      sum += this.data[i];
-    }
-    return sum/this.data.length;
-  }
-};
-var a = new Series();
-a.create(primesTo,20);
-console.log(a.data);
-console.log(a.average());
