@@ -61,3 +61,15 @@ var term = function(){
     return Math.pow(num,this.exponent) * this.coefficient / this.divisor;
   };
 };
+Array.prototype.at = function( num ){
+  var sum = 0;
+  for(var i = 0; i < this.length; i++){
+    if(this[i].variable == 'x'){
+      sum += this[i].at(num);
+    }
+    else if(this[i].variable == 1){
+      sum += this[i].coefficient;
+    }
+  }
+  return sum;
+};
