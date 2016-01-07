@@ -18,7 +18,7 @@ var makeGraph = function(expr){
     ctx.lineWidth = "2";
     var y = expr.at(i);
     var canvasX = scale*i+offsetX;
-    var canvasY = canvas.height - y - offsetY;
+    var canvasY = canvas.height - scale*y - offsetY;
     ctx.lineTo(canvasX, canvasY);
     ctx.stroke();
     ctx.beginPath();
