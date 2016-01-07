@@ -3,32 +3,25 @@ var ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth-50;
 canvas.height= window.innerHeight-50; //account for default padding/margin
 
-var getPoints = function(f){
-  if(typeof f != "function"){
-    return;
-  }
-  var minX = -20;
-  var maxX = 20;
-  var inc = 1;
-  var points = [];
-  for(var i=minX; i<=maxX; i+=inc){
-    points.push([i,f(i)]);
-  }
-  return points;
-};
-var makeGraph = function(arr){
-  var offset = canvas.width/2;
-  var scale = 4;
+var makeGraph = function(expr){
+  var offsetX = canvas.width/2;
+  var offsetY = canvas.height/2;
   ctx.lineWidth = 1;
-  ctx.moveTo(scale*(arr[0][0])+offset,canvas.height-arr[0][1]);
-  for(var i in arr){
-    ctx.lineTo(scale*(arr[i][0])+offset,canvas.height-arr[i][1]);
+  var step = 1;
+  var min = -10;
+  var max = 10;
+  var range = max - min;
+  var scale = window.innerWidth / range;
+  ctx.moveTo(scale*min+offsetX,canvas.height-expr.at(min)-offsetY);
+  for(var i = min; i < max; i += step){
+    ctx.strokeStyle="black";
+    ctx.lineWidth = "2";
+    var y = expr.at(i);
+    var canvasX = scale*i+offsetX;
+    var canvasY = canvas.height - y - offsetY;
+    ctx.lineTo(canvasX, canvasY);
     ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(canvasX,canvasY);
   }
 };
-var a = function(x){
-  return x*x;
-}
-
-console.log(getPoints(a));
-makeGraph(getPoints(a));
