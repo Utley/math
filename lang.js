@@ -22,7 +22,6 @@ var parse = function( expressionString ){
       tmp = new term();
       str = '';
       str += curr;
-      tmp.coefficient = Number(str);
       negative = true;
     }
     else if(curr.match(/[a-zA-Z]/)){
@@ -34,10 +33,7 @@ var parse = function( expressionString ){
     if( i == expressionString.length-1 ){
       tmp.coefficient = Number(str);
       terms.push(tmp.clone());
-      tmp = new term();
-      str = '';
     }
-
   }
 
   if(terms.length > 1){
@@ -60,5 +56,8 @@ var term = function(){
     tmp.variable = this.variable;
     tmp.divisor = this.divisor;
     return tmp;
-  }
+  };
+  this.at = function( num ){
+    return Math.pow(num,this.exponent) * this.coefficient / this.divisor;
+  };
 };
