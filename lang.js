@@ -44,6 +44,26 @@ var parse = function( expressionString ){
   }
 };
 
+var evalPostfix = function( str ){
+  var stack = [];
+  var result;
+  var operands = ['+','-','*','/'];
+  for(var i = 0; i < str.length; i++){
+    var curr = str.charAt(i);
+    if(operands.indexOf(curr) > -1){
+      var var2 = stack.pop();
+      var var1 = stack.pop(); //pop the second operand first
+      result = eval(var1 + curr + var2);
+      console.log(var1 + curr + var2 + '=' + result);
+      stack.push(result);
+    }
+    else{
+      stack.push(curr);
+    }
+  }
+  return stack[0];
+};
+
 var term = function(){
   this.coefficient = 1;
   this.exponent = 1;
