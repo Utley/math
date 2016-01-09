@@ -44,12 +44,12 @@ var parse = function( expressionString ){
   }
 };
 
-var evalPostfix = function( str ){
+var evalPostfix = function( mathString ){
   var stack = [];
   var result;
   var operands = ['+','-','*','/'];
-  for(var i = 0; i < str.length; i++){
-    var curr = str.charAt(i);
+  for(var i = 0; i < mathString.length; i++){
+    var curr = mathString.charAt(i);
     if(operands.indexOf(curr) > -1){
       var var2 = stack.pop();
       var var1 = stack.pop(); //pop the second operand first
@@ -62,6 +62,53 @@ var evalPostfix = function( str ){
     }
   }
   return stack[0];
+};
+
+var toPostfix = function( str ){
+  //shunting yard algorithm
+  var operatorStack = [];
+  var output = [];
+  var operators = {
+    '+' : {
+      'priority' : 2
+    },
+    '-' : {
+      'priority' : 2
+    },
+    '*' : {
+      'priority' : 1
+    },
+    '/' : {
+      'priority' : 1
+    }
+  }
+  for(var i = 0; i < str.length; i++){
+    var curr = str.charAt(i);
+    if(operators.hasOwnProperty(curr)){
+      var hasPriority = false;
+      for(var j in operatorStack){
+        if(operatorStack[j].priority == operators[curr].priority){
+          hasPriority = true;
+        }
+      }
+      if(hasPriority){
+        while(operatorStack.length > 0){
+          output.push(operatorStack.pop());
+        }
+        operatorStack.push(curr)
+      }
+      else{
+        operatorStack.push(curr);
+      }
+    }
+  else {
+    output.push(curr);
+  }
+  }
+  while(operatorStack.length > 0){
+    output.push(operatorStack.pop());
+  }
+  return output.join('');
 };
 
 var term = function(){
