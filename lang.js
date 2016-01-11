@@ -95,7 +95,7 @@ var toPostfix = function( str ){
 	      continue;
       }
       while( operatorStack.length > 0 ){
-        if( operators[curr].priority > operators[operatorStack[operatorStack.length-1]].priority ){
+        if( operators[curr].priority >= operators[operatorStack[operatorStack.length-1]].priority ){
           output.push(operatorStack.pop());
         }
         else {
