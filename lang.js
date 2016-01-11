@@ -89,9 +89,14 @@ var toPostfix = function( str ){
 	      operatorStack.push(curr);
 	      continue;
       }
-      while( operators[curr].priority <= operators[operatorStack[operatorStack.length-1]]['priority'] ){
+      while( operatorStack.length > 0 ){
+        if( operators[curr].priority > operators[operatorStack[operatorStack.length-1]].priority ){
+          output.push(operatorStack.pop());
+        }
+        else {
+          break;
+        }
       //while the priority of the last element in the stack is lower than the current priority, pop it
-        output.push(operatorStack.pop());
       }
       operatorStack.push(curr);
     }
