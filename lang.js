@@ -48,6 +48,8 @@ var evalPostfix = function( mathString ){
   var stack = [];
   var result;
   var operands = ['+','-','*','/'];
+  var steps = document.getElementById('steps');
+  steps.innerHTML = '';
   for(var i = 0; i < mathString.length; i++){
     var curr = mathString.charAt(i);
     if(operands.indexOf(curr) > -1){
@@ -55,6 +57,9 @@ var evalPostfix = function( mathString ){
       var var1 = stack.pop(); //pop the second operand first
       result = eval(var1 + curr + var2);
       console.log(var1 + curr + var2 + '=' + result);
+      var step = document.createElement('li');
+      step.innerHTML = var1 + curr + var2 + '=' + result;
+      steps.appendChild(step);
       stack.push(result);
     }
     else{
