@@ -97,11 +97,11 @@ var toPostfix = function( str ){
 	      operatorStack.push(curr);
 	      continue;
       }
-      if(curr == "("){
-        continue;
-      }
       while( operatorStack.length > 0 ){
         if( operators[curr].priority >= operators[operatorStack[operatorStack.length-1]].priority ){
+          if( curr == "("){
+            break;
+          }
           output.push(operatorStack.pop());
         }
         else {
@@ -111,15 +111,22 @@ var toPostfix = function( str ){
       }
       operatorStack.push(curr);
     }
-    else if(curr == "("){
-      operatorStack.push(curr);
-    }
     else if(curr == ")"){
       if(operatorStack.length == 0){
+        //make sure operator stack isn't empty first
         break;
       }
-      while(operatorStack[operatorStack.length - 1] != "("){
-        output.push(operatorStack.pop());
+      //for right parens, loop through the stack and add each
+      //operator to the output until we find a left paren
+      while(operatorStack.length > 0){
+        if(operatorStack[operatorStack.length-1] == "("){
+          //get rid of the left paren if we find it
+          operatorStack.pop();
+          break;
+        }
+        else{
+          output.push(operatorStack.pop());
+        }
       }
     }
     else {
