@@ -74,6 +74,9 @@ var toPostfix = function( str ){
   var operatorStack = [];
   var output = [];
   var operators = {
+    '(' : {
+      'priority' : 4
+    },
     '+' : {
       'priority' : 2
     },
@@ -94,6 +97,9 @@ var toPostfix = function( str ){
 	      operatorStack.push(curr);
 	      continue;
       }
+      if(curr == "("){
+        continue;
+      }
       while( operatorStack.length > 0 ){
         if( operators[curr].priority >= operators[operatorStack[operatorStack.length-1]].priority ){
           output.push(operatorStack.pop());
@@ -104,6 +110,17 @@ var toPostfix = function( str ){
       //while the priority of the last element in the stack is lower than the current priority, pop it
       }
       operatorStack.push(curr);
+    }
+    else if(curr == "("){
+      operatorStack.push(curr);
+    }
+    else if(curr == ")"){
+      if(operatorStack.length == 0){
+        break;
+      }
+      while(operatorStack[operatorStack.length - 1] != "("){
+        output.push(operatorStack.pop());
+      }
     }
     else {
 	    //if the char isn't an operator, then it's a number and should be added to output
