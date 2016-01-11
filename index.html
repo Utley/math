@@ -3,6 +3,7 @@
 </head>
 <body>
 <input type="text" id="eq" />
+<input type="text" id="eval" />
 <ul id="steps">
 
 </ul>
@@ -10,10 +11,16 @@
 <script src="lang.js"></script>
 <script src="graph.js"></script>
 <script>
-var uinput = document.getElementById("eq");
-uinput.addEventListener("change", function(){
+var graphInput = document.getElementById("eq");
+graphInput.addEventListener("change", function(){
   var text = document.getElementById("eq").value;
   makeGraph(parse(text));
+});
+
+var evalInput = document.getElementById("eval");
+evalInput.addEventListener("change", function(){
+  var text = document.getElementById("eval").value;
+  evalPostfix(toPostfix(text));
 });
 
 </script>
