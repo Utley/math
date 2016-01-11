@@ -85,25 +85,20 @@ var toPostfix = function( str ){
   for(var i = 0; i < str.length; i++){
     var curr = str.charAt(i);
     if(operators.hasOwnProperty(curr)){
-      var hasPriority = false;
-      for(var j in operatorStack){
-        if(operatorStack[j].priority == operators[curr].priority){
-          hasPriority = true;
-        }
+      if(operatorStack.length <= 0){
+	      operatorStack.push(curr);
+	      continue;
       }
-      if(hasPriority){
-        while(operatorStack.length > 0){
-          output.push(operatorStack.pop());
-        }
-        operatorStack.push(curr)
+      while( operators[curr].priority <= operators[operatorStack[operatorStack.length-1]]['priority'] ){
+      //while the priority of the last element in the stack is lower than the current priority, pop it
+        output.push(operatorStack.pop());
       }
-      else{
-        operatorStack.push(curr);
-      }
+      operatorStack.push(curr);
     }
-  else {
-    output.push(curr);
-  }
+    else {
+	    //if the char isn't an operator, then it's a number and should be added to output
+	    output.push(curr);
+    }
   }
   while(operatorStack.length > 0){
     output.push(operatorStack.pop());
