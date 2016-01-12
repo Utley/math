@@ -47,7 +47,7 @@ var parse = function( expressionString ){
 var evalPostfix = function( mathString ){
   var stack = [];
   var result;
-  var operands = ['+','-','*','/'];
+  var operands = ['+','-','*','/','^'];
   var steps = document.getElementById('steps');
   steps.innerHTML = '';
   for(var i = 0; i < mathString.length; i++){
@@ -55,7 +55,12 @@ var evalPostfix = function( mathString ){
     if(operands.indexOf(curr) > -1){
       var var2 = stack.pop();
       var var1 = stack.pop(); //pop the second operand first
-      result = eval(var1 + curr + var2);
+      if( curr == '^'){
+        result = Math.pow(var1,var2);
+      }
+      else{
+        result = eval(var1 + curr + var2);
+      }
       console.log(var1 + curr + var2 + '=' + result);
       var step = document.createElement('li');
       step.innerHTML = var1 + curr + var2 + '=' + result;
@@ -76,6 +81,9 @@ var toPostfix = function( str ){
   var operators = {
     '(' : {
       'priority' : 4
+    },
+    '^' : {
+      'priority' : 0
     },
     '+' : {
       'priority' : 2
