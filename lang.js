@@ -79,12 +79,6 @@ var toPostfix = function( str ){
   var operatorStack = [];
   var output = [];
   var operators = {
-    '(' : {
-      'priority' : 4
-    },
-    '^' : {
-      'priority' : 0
-    },
     '+' : {
       'priority' : 2
     },
@@ -96,20 +90,16 @@ var toPostfix = function( str ){
     },
     '/' : {
       'priority' : 1
+    },
+    '^' : {
+      'priority' : 0
     }
   }
   for(var i = 0; i < str.length; i++){
     var curr = str.charAt(i);
-    if(operators.hasOwnProperty(curr)){
-      if(operatorStack.length <= 0){
-	      operatorStack.push(curr);
-	      continue;
-      }
+    if( operators.hasOwnProperty(curr) ){
       while( operatorStack.length > 0 ){
         if( operators[curr].priority >= operators[operatorStack[operatorStack.length-1]].priority ){
-          if( curr == "("){
-            break;
-          }
           output.push(operatorStack.pop());
         }
         else {
@@ -117,7 +107,12 @@ var toPostfix = function( str ){
         }
       //while the priority of the last element in the stack is lower than the current priority, pop it
       }
-      operatorStack.push(curr);
+      operatorStack.push( curr );
+    }
+    else if( curr == "(" ){
+      //even though parens aren't operators, add them to the stack
+      //so we know which operators to send to output later
+      operatorStack.push( curr );
     }
     else if(curr == ")"){
       if(operatorStack.length == 0){
@@ -133,19 +128,19 @@ var toPostfix = function( str ){
           break;
         }
         else{
-          output.push(operatorStack.pop());
+          output.push( operatorStack.pop() );
         }
       }
     }
     else {
-	    //if the char isn't an operator, then it's a number and should be added to output
-	    output.push(curr);
+	    //if the char isn't an operator or paren, then it's a number and should be added to output
+	    output.push( curr );
     }
   }
   while(operatorStack.length > 0){
-    output.push(operatorStack.pop());
+    output.push( operatorStack.pop() );
   }
-  return output.join('');
+  return output.join( '' ); //converts array to string
 };
 
 var term = function(){
@@ -162,16 +157,16 @@ var term = function(){
     return tmp;
   };
   this.at = function( num ){
-    return Math.pow(num,this.exponent) * this.coefficient / this.divisor;
+    return Math.pow( num, this.exponent ) * this.coefficient / this.divisor;
   };
 };
 Array.prototype.at = function( num ){
   var sum = 0;
-  for(var i = 0; i < this.length; i++){
-    if(this[i].variable == 'x'){
+  for( var i = 0; i < this.length; i++ ){
+    if( this[i].variable == 'x' ){
       sum += this[i].at(num);
     }
-    else if(this[i].variable == 1){
+    else if( this[i].variable == 1 ){
       sum += this[i].coefficient;
     }
   }
