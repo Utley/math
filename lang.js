@@ -95,11 +95,12 @@ var toPostfix = function( str ){
       'priority' : 0
     }
   }
-  for(var i = 0; i < str.length; i++){
+  for( var i = 0; i < str.length; i++ ){
     var curr = str.charAt(i);
     if( operators.hasOwnProperty(curr) ){
       while( operatorStack.length > 0 ){
-        if( operatorStack[operatorStack.length - 1] ){
+        if( operatorStack[operatorStack.length - 1] == "(" ){
+          //if we run into a paren, break since it isn't an operator
           break;
         }
         if( operators[curr].priority >= operators[operatorStack[operatorStack.length-1]].priority ){
