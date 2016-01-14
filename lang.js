@@ -63,7 +63,8 @@ var evalPostfix = function( mathString ){
       }
       console.log(var1 + curr + var2 + '=' + result);
       var step = document.createElement('li');
-      step.innerHTML = var1 + curr + var2 + '=' + result;
+      var maxLength = 5;
+      step.innerHTML = var1.substr(0,maxLength) + curr + var2.substr(0,maxLength) + '=' + String(result).substr(0,maxLength);
       steps.appendChild(step);
       stack.push(result);
     }
