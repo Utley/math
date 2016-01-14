@@ -99,6 +99,9 @@ var toPostfix = function( str ){
     var curr = str.charAt(i);
     if( operators.hasOwnProperty(curr) ){
       while( operatorStack.length > 0 ){
+        if( operatorStack[operatorStack.length - 1] ){
+          break;
+        }
         if( operators[curr].priority >= operators[operatorStack[operatorStack.length-1]].priority ){
           output.push(operatorStack.pop());
         }
@@ -114,20 +117,20 @@ var toPostfix = function( str ){
       //so we know which operators to send to output later
       operatorStack.push( curr );
     }
-    else if(curr == ")"){
-      if(operatorStack.length == 0){
+    else if( curr == ")" ){
+      if( operatorStack.length == 0 ){
         //make sure operator stack isn't empty first
         break;
       }
       //for right parens, loop through the stack and add each
       //operator to the output until we find a left paren
-      while(operatorStack.length > 0){
-        if(operatorStack[operatorStack.length-1] == "("){
+      while( operatorStack.length > 0 ){
+        if( operatorStack[operatorStack.length-1] == "(" ){
           //get rid of the left paren if we find it
           operatorStack.pop();
           break;
         }
-        else{
+        else {
           output.push( operatorStack.pop() );
         }
       }
