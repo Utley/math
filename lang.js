@@ -80,20 +80,29 @@ var toPostfix = function( str ){
   var operatorStack = [];
   var output = [];
   var operators = {
+    //operators are evaluated from least priority to greatest
+    //left indicates whether the operator should group left or right
+    //ie 3 / 2 / 2 -> (3/2) / 2
+    //but 2^3^4 -> 2^(3^4)
     '+' : {
-      'priority' : 2
+      'priority' : 2,
+      'left' : true
     },
     '-' : {
-      'priority' : 2
+      'priority' : 2,
+      'left' : true
     },
     '*' : {
-      'priority' : 1
+      'priority' : 1,
+      'left' : true
     },
     '/' : {
-      'priority' : 1
+      'priority' : 1,
+      'left' : true
     },
     '^' : {
-      'priority' : 0
+      'priority' : 0,
+      'left' : false
     }
   }
   var curr;
@@ -107,7 +116,14 @@ var toPostfix = function( str ){
           //if we run into a paren, break since it isn't an operator
           break;
         }
-        if( operators[curr].priority >= operators[operatorStack[operatorStack.length-1]].priority ){
+        if( operators[curr].priority >= operators[operatorStack[operatorStack.length-1]].priority
+            && operators[curr].left){
+          output.push(operatorStack.pop());
+        }
+        else if( operators[curr].priority > operators[operatorStack[operatorStack.length-1]].priority
+            && !operators[curr].left) {
+              //i know how bad this is, i'll clean it up later
+              //but it seems to work for now
           output.push(operatorStack.pop());
         }
         else {
