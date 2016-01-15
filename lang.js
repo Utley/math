@@ -51,12 +51,12 @@ var evalPostfix = function( mathString ){
   var steps = document.getElementById('steps');
   steps.innerHTML = '';
   for(var i = 0; i < mathString.length; i++){
-    var curr = mathString.charAt(i);
+    var curr = mathString[i];
     if(operands.indexOf(curr) > -1){
       var var2 = stack.pop();
       var var1 = stack.pop(); //pop the second operand first
-      if( curr == '^'){
-        result = Math.pow(var1,var2);
+      if( curr == '^' ){
+        result = Math.pow( var1, var2 );
       }
       else{
         result = eval(var1 + curr + var2);
@@ -96,8 +96,11 @@ var toPostfix = function( str ){
       'priority' : 0
     }
   }
+  var curr;
+  var prev;
   for( var i = 0; i < str.length; i++ ){
-    var curr = str.charAt(i);
+    prev = curr;
+    curr = str.charAt(i);
     if( operators.hasOwnProperty(curr) ){
       while( operatorStack.length > 0 ){
         if( operatorStack[operatorStack.length - 1] == "(" ){
@@ -139,13 +142,18 @@ var toPostfix = function( str ){
     }
     else {
 	    //if the char isn't an operator or paren, then it's a number and should be added to output
-	    output.push( curr );
+      if( !isNaN(Number.parseInt(prev)) ){
+        output[output.length - 1] += curr;
+      }
+      else{
+        output.push( curr );
+      }
     }
   }
   while(operatorStack.length > 0){
     output.push( operatorStack.pop() );
   }
-  return output.join( '' ); //converts array to string
+  return output;
 };
 
 var term = function(){
