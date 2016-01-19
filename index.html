@@ -16,14 +16,14 @@
 var graphInput = document.getElementById("eq");
 graphInput.addEventListener("change", function(){
   var text = document.getElementById("eq").value;
-  makeGraph(parse(text));
+  makeGraph(text);
 });
 
 var evalInput = document.getElementById("eval");
 evalInput.addEventListener("change", function(){
   var text = document.getElementById("eval").value;
   var variables = {
-    'x' : '3'
+    'x' : 3,
   };
   evalPostfix(toPostfix(text), variables);
 });

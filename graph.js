@@ -7,16 +7,20 @@ var makeGraph = function(expr){
   var offsetX = canvas.width/2;
   var offsetY = canvas.height/2;
   ctx.lineWidth = 1;
-  var step = 1;
+  var step = .25;
   var min = -10;
   var max = 10;
   var range = max - min;
   var scale = window.innerWidth / range;
-  ctx.moveTo(scale*min+offsetX,canvas.height-expr.at(min)-offsetY);
+  var variables = {
+    'x': min
+  };
+  ctx.moveTo(scale*min+offsetX,scale * (canvas.height-evalFunction(expr,variables)-offsetY) );
   for(var i = min; i < max; i += step){
     ctx.strokeStyle="black";
     ctx.lineWidth = "2";
-    var y = expr.at(i);
+    var y = evalFunction( expr, variables );
+    variables.x = i;
     var canvasX = scale*i+offsetX;
     var canvasY = canvas.height - scale*y - offsetY;
     ctx.lineTo(canvasX, canvasY);

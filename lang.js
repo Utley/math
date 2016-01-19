@@ -192,6 +192,11 @@ var term = function(){
     return Math.pow( num, this.exponent ) * this.coefficient / this.divisor;
   };
 };
+
+var evalFunction = function( expr, variables ){
+  return evalPostfix( toPostfix(expr), variables );
+};
+
 Array.prototype.at = function( num ){
   var sum = 0;
   for( var i = 0; i < this.length; i++ ){
