@@ -22,7 +22,10 @@ graphInput.addEventListener("change", function(){
 var evalInput = document.getElementById("eval");
 evalInput.addEventListener("change", function(){
   var text = document.getElementById("eval").value;
-  evalPostfix(toPostfix(text));
+  var variables = {
+    'x' : '3'
+  };
+  evalPostfix(toPostfix(text), variables);
 });
 
 </script>

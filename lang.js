@@ -44,7 +44,7 @@ var parse = function( expressionString ){
   }
 };
 
-var evalPostfix = function( mathString ){
+var evalPostfix = function( mathString, variables ){
   var stack = [];
   var result;
   var operands = ['+','-','*','/','^'];
@@ -67,6 +67,9 @@ var evalPostfix = function( mathString ){
       step.innerHTML = String(var1) + curr + String(var2) + '=' + String(result);
       steps.appendChild(step);
       stack.push(result);
+    }
+    else if( variables.hasOwnProperty( curr ) ){
+      stack.push( variables[curr] );
     }
     else{
       stack.push(curr);
