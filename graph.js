@@ -9,6 +9,14 @@ var graph = function( mcanvas ){
   this.offsetX = mcanvas.width / 2;
   this.offsetY = mcanvas.height / 2;
   this.dragging = false;
+  this.width = mcanvas.width;
+  this.height = mcanvas.height;
+  this.step = .05;
+  this.min = -10;
+  this.max = 10;
+  this.range = this.max - this.min;
+  this.scaleX = canvas.width / this.range;
+  this.scaleY = canvas.width / this.range; //technically wrong but it makes the graph look ok
   mcanvas.addEventListener("mousedown", function(){
     this.dragging = true;
   });
@@ -19,19 +27,13 @@ var graph = function( mcanvas ){
     if( this.dragging ){
       g.offsetX += event.movementX;
       g.offsetY -= event.movementY;
+
       g.render('x^2');
     }
   });
-  this.width = mcanvas.width;
-  this.height = mcanvas.height;
-  this.step = .05;
-  this.min = -10;
-  this.max = 10;
-  this.range = this.max - this.min;
-  this.scaleX = canvas.width / this.range;
-  this.scaleY = canvas.width / this.range; //technically wrong but it makes the graph look ok
   this.render = function(expr){
     this.clear();
+    this.drawGrid();
     ctx.lineWidth = 1;
     var variables = {
       'x': this.min
@@ -56,17 +58,17 @@ var graph = function( mcanvas ){
     ctx.lineWidth = 1;
     ctx.moveTo( 0, this.offsetY );
     //horizontal lines
-    for(var i = 0; i <= this.range/2; i++){
+    for(var i = 0; i <= this.height; i++){
       ctx.beginPath();
-      ctx.moveTo( 0, this.height - this.scaleY * i - this.offsetY);
+      ctx.moveTo( 0,           this.height - this.scaleY * i - this.offsetY);
       ctx.lineTo( this.width,  this.height - this.scaleY * i - this.offsetY);
-      ctx.moveTo( 0, this.height - this.scaleY * i - this.offsetY);
-      ctx.lineTo( this.width,  this.height - this.scaleY * i - this.offsetY);
+      ctx.moveTo( 0,           this.height + this.scaleY * i - this.offsetY);
+      ctx.lineTo( this.width,  this.height + this.scaleY * i - this.offsetY);
       ctx.strokeStyle = "grey";
       ctx.stroke();
     }
     //vertical lines
-    for(var i = 0; i <= this.range/2; i++){
+    for(var i = 0; i <= this.height; i++){
       ctx.beginPath();
       ctx.moveTo( this.offsetX - this.scaleX * i, 0 );
       ctx.lineTo( this.offsetX - this.scaleX * i, this.height)
