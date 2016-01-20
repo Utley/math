@@ -14,9 +14,12 @@
 <script src="graph.js"></script>
 <script>
 var graphInput = document.getElementById("eq");
+var canvas = document.getElementById("graph");
+var g = new graph( canvas );
+g.drawGrid();
 graphInput.addEventListener("change", function(){
   var text = document.getElementById("eq").value;
-  makeGraph(text);
+  g.render( text );
 });
 
 var evalInput = document.getElementById("eval");
