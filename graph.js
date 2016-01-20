@@ -23,11 +23,16 @@ var graph = function( mcanvas ){
   mcanvas.addEventListener("mouseup", function(){
     this.dragging = false;
   });
+  mcanvas.addEventListener("wheel", function(event){
+    event.preventDefault();
+    g.offsetX -= event.deltaX;
+    g.offsetY += event.deltaY;
+    g.render('x^2'); //default
+  });
   mcanvas.addEventListener("mousemove", function(event){
     if( this.dragging ){
       g.offsetX += event.movementX;
       g.offsetY -= event.movementY;
-
       g.render('x^2');
     }
   });
