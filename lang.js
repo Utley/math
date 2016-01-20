@@ -61,9 +61,7 @@ var evalPostfix = function( mathString, variables ){
       else{
         result = eval(var1 + curr + var2);
       }
-      console.log(var1 + curr + var2 + '=' + result);
       var step = document.createElement('li');
-      var maxLength = 5;
       step.innerHTML = String(var1) + curr + String(var2) + '=' + String(result);
       steps.appendChild(step);
       stack.push(result);
