@@ -19,7 +19,8 @@ var g = new graph( canvas );
 g.drawGrid();
 graphInput.addEventListener("change", function(){
   var text = document.getElementById("eq").value;
-  g.render( text );
+  g.addPlot( text );
+  g.render();
 });
 
 var evalInput = document.getElementById("eval");
