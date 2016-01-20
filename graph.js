@@ -12,18 +12,19 @@ var makeGraph = function(expr){
   var min = -10;
   var max = 10;
   var range = max - min;
-  var scale = canvas.width / range;
+  var scaleX = canvas.width / range;
+  var scaleY = canvas.height / range;
   var variables = {
     'x': min
   };
-  ctx.moveTo(scale*min+offsetX,scale * (canvas.height-evalFunction(expr,variables)-offsetY) );
-  for(var i = min; i < max; i += step){
+  ctx.moveTo(scaleX*min+offsetX, canvas.height-scaleY*evalFunction(expr,variables)-offsetY );
+  for(var i = min; i <= max; i += step){
     ctx.strokeStyle="black";
     ctx.lineWidth = "2";
-    var y = evalFunction( expr, variables );
     variables.x = i;
-    var canvasX = scale*i+offsetX;
-    var canvasY = canvas.height - scale*y - offsetY;
+    var y = evalFunction( expr, variables );
+    var canvasX = scaleX*i+offsetX;
+    var canvasY = canvas.height - scaleY*y - offsetY;
     ctx.lineTo(canvasX, canvasY);
     ctx.stroke();
     ctx.beginPath();
@@ -36,21 +37,30 @@ var drawGrid = function(){
   var height = canvas.height;
   var min = -10;
   var max = 10;
-  var range = max - min;
-  var scaleX = width / range;
-  var scaleY = height / 10;
-  //for every integer x value
-  for(var i = 0; i < range; i++){
+  var rangeX = max - min;
+  var rangeY = max - min;
+  var scaleX = width / rangeX;
+  var scaleY = height / rangeY;
+  //horizontal lines
+  var offsetX = canvas.width / 2;
+  var offsetY = canvas.height / 2;
+  ctx.moveTo( 0, offsetY );
+  for(var i = 0; i <= rangeY/2; i++){
     ctx.beginPath();
-    ctx.moveTo( scaleX * i, 0);
-    ctx.lineTo( scaleX * i, height );
+    ctx.moveTo( 0, offsetY - scaleY * i );
+    ctx.lineTo( width, offsetY - scaleY * i );
+    ctx.moveTo( 0, offsetY + scaleY * i );
+    ctx.lineTo( width, offsetY + scaleY * i);
     ctx.strokeStyle = "grey";
     ctx.stroke();
   }
-  for(var i = 0; i < range; i++){
+  //vertical lines
+  for(var i = 0; i <= rangeX/2; i++){
     ctx.beginPath();
-    ctx.moveTo( 0, scaleY * i);
-    ctx.lineTo( width, scaleY * i );
+    ctx.moveTo( offsetX - scaleX * i, 0 );
+    ctx.lineTo( offsetX - scaleX * i, height)
+    ctx.moveTo( offsetX + scaleX * i, 0 );
+    ctx.lineTo( offsetX + scaleX * i, height );
     ctx.strokeStyle = "grey";
     ctx.stroke();
   }
