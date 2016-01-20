@@ -2,10 +2,26 @@ var canvas = document.getElementById("graph");
 var ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth-50;
 canvas.height= window.innerHeight-50; //account for default padding/margin
+canvas.addEventListener('mousemove',function(event){
 
+});
 var graph = function( mcanvas ){
   this.offsetX = mcanvas.width / 2;
   this.offsetY = mcanvas.height / 2;
+  this.dragging = false;
+  mcanvas.addEventListener("mousedown", function(){
+    this.dragging = true;
+  });
+  mcanvas.addEventListener("mouseup", function(){
+    this.dragging = false;
+  });
+  mcanvas.addEventListener("mousemove", function(event){
+    if( this.dragging ){
+      g.offsetX += event.movementX;
+      g.offsetY -= event.movementY;
+      g.render('x^2');
+    }
+  });
   this.width = mcanvas.width;
   this.height = mcanvas.height;
   this.step = .05;
@@ -15,6 +31,7 @@ var graph = function( mcanvas ){
   this.scaleX = canvas.width / this.range;
   this.scaleY = canvas.width / this.range; //technically wrong but it makes the graph look ok
   this.render = function(expr){
+    this.clear();
     ctx.lineWidth = 1;
     var variables = {
       'x': this.min
@@ -38,12 +55,13 @@ var graph = function( mcanvas ){
   this.drawGrid = function(){
     ctx.lineWidth = 1;
     ctx.moveTo( 0, this.offsetY );
+    //horizontal lines
     for(var i = 0; i <= this.range/2; i++){
       ctx.beginPath();
-      ctx.moveTo( 0, this.offsetY - this.scaleY * i );
-      ctx.lineTo( this.width, this.offsetY - this.scaleY * i );
-      ctx.moveTo( 0, this.offsetY + this.scaleY * i );
-      ctx.lineTo( this.width, this.offsetY + this.scaleY * i);
+      ctx.moveTo( 0, this.height - this.scaleY * i - this.offsetY);
+      ctx.lineTo( this.width,  this.height - this.scaleY * i - this.offsetY);
+      ctx.moveTo( 0, this.height - this.scaleY * i - this.offsetY);
+      ctx.lineTo( this.width,  this.height - this.scaleY * i - this.offsetY);
       ctx.strokeStyle = "grey";
       ctx.stroke();
     }
@@ -58,4 +76,8 @@ var graph = function( mcanvas ){
       ctx.stroke();
     }
   };
+  this.clear = function(){
+    ctx.clearRect(0,0,this.width,this.height);
+    this.drawGrid();
+  }
 };
