@@ -119,14 +119,12 @@ var toPostfix = function( str ){
           //if we run into a paren, break since it isn't an operator
           break;
         }
-        if( operators[curr].priority >= operators[operatorStack[operatorStack.length-1]].priority
-            && operators[curr].left){
-          output.push(operatorStack.pop());
-        }
-        else if( operators[curr].priority > operators[operatorStack[operatorStack.length-1]].priority
-            && !operators[curr].left) {
-              //i know how bad this is, i'll clean it up later
-              //but it seems to work for now
+        var currentPriority = operators[curr].priority;
+        var lastPriority = operators[operatorStack[operatorStack.length - 1]].priority;
+        var leftGrouping = operators[curr].left;
+
+        if( (currentPriority >= lastPriority && leftGrouping) ||
+            (currentPriority >  lastPriority && !leftGrouping) ){
           output.push(operatorStack.pop());
         }
         else {
