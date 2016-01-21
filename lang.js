@@ -157,7 +157,7 @@ var toPostfix = function( str ){
     }
     else {
 	    //if the char isn't an operator or paren, then it's a number and should be added to output
-      if( !isNaN(Number.parseInt(prev)) ){
+      if( !isNaN(Number.parseInt(prev)) || prev == "." ){
         output[output.length - 1] += curr;
       }
       else{
