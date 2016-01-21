@@ -27,6 +27,8 @@ var graph = function( mcanvas ){
     event.preventDefault();
     g.offsetX -= event.deltaX;
     g.offsetY += event.deltaY;
+    g.min += event.deltaX * this.scaleX;
+    g.max += event.deltaX * this.scaleX;
     g.render(); //default
   });
   mcanvas.addEventListener("mousemove", function(event){
@@ -76,25 +78,27 @@ var graph = function( mcanvas ){
       }
     }
   };
-  
+
   this.drawGrid = function(){
     ctx.lineWidth = 1;
     ctx.moveTo( 0, this.offsetY );
     //horizontal lines
-    for(var i = 0; i <= this.height; i++){
+    for(var i = 0; i <= this.range; i++){
       ctx.beginPath();
       ctx.moveTo( 0,           this.height - this.scaleY * i - this.offsetY);
       ctx.lineTo( this.width,  this.height - this.scaleY * i - this.offsetY);
+      ctx.fillText( i, this.offsetX, this.height - this.offsetY - this.scaleY * i );
       ctx.moveTo( 0,           this.height + this.scaleY * i - this.offsetY);
       ctx.lineTo( this.width,  this.height + this.scaleY * i - this.offsetY);
       ctx.strokeStyle = "grey";
       ctx.stroke();
     }
     //vertical lines
-    for(var i = 0; i <= this.height; i++){
+    for(var i = 0; i <= this.range; i++){
       ctx.beginPath();
       ctx.moveTo( this.offsetX - this.scaleX * i, 0 );
-      ctx.lineTo( this.offsetX - this.scaleX * i, this.height)
+      ctx.lineTo( this.offsetX - this.scaleX * i, this.height);
+      ctx.fillText( i, this.offsetX + this.scaleX * i, this.height - this.offsetY );
       ctx.moveTo( this.offsetX + this.scaleX * i, 0 );
       ctx.lineTo( this.offsetX + this.scaleX * i, this.height );
       ctx.strokeStyle = "grey";
