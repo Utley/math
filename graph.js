@@ -35,6 +35,8 @@ var graph = function( mcanvas ){
     if( this.dragging ){
       g.offsetX += event.movementX;
       g.offsetY -= event.movementY;
+      g.min -= event.movementX / g.scaleX;
+      g.max -= event.movementX / g.scaleX;
       g.render();
     }
   });
