@@ -16,7 +16,6 @@ var graph = function( mcanvas ){
   this.scaleX = canvas.width / this.range; //ratio of pixels to mathematical units
   this.scaleY = canvas.width / this.range; //technically wrong but it makes the graph look ok
   this.dragging = false; //for event listeners
-
   mcanvas.addEventListener("mousedown", function(){
     this.dragging = true;
   });
@@ -31,10 +30,10 @@ var graph = function( mcanvas ){
     g.max += event.deltaX / g.scaleX;
     g.render(); //default
   });
-  mcanvas.addEventListener("mousemove", function(event){
+  mcanvas.addEventListener("mousemove", function(event, that){
     if( this.dragging ){
-      g.offsetX += event.movementX;
-      g.offsetY -= event.movementY;
+      that.offsetX += event.movementX;
+      that.offsetY -= event.movementY;
       g.min -= event.movementX / g.scaleX;
       g.max -= event.movementX / g.scaleX;
       g.render();
@@ -97,13 +96,14 @@ var graph = function( mcanvas ){
       ctx.moveTo( 0,           this.height + this.scaleY * i - offsetY);
       ctx.lineTo( this.width,  this.height + this.scaleY * i - offsetY);
 
-      ctx.fillText( i, this.offsetX, this.height - this.offsetY - this.scaleY * i );
+      ctx.fillText( -Math.floor(this.offsetY / this.scaleY) + i, this.offsetX, this.height - this.scaleY * i - offsetY);
       ctx.strokeStyle = "grey";
       ctx.stroke();
     }
     //vertical lines
-    for(var i = 0; i <= range; i++){
+    for(var i = 0; i <= range + 2; i++){
       ctx.beginPath();
+      ctx.strokeStyle = "grey";
 
       ctx.moveTo( offsetX - this.scaleX * i, 0           );
       ctx.lineTo( offsetX - this.scaleX * i, this.height );
@@ -111,8 +111,7 @@ var graph = function( mcanvas ){
       ctx.moveTo( offsetX + this.scaleX * i, 0           );
       ctx.lineTo( offsetX + this.scaleX * i, this.height );
 
-      ctx.fillText( i, this.offsetX + this.scaleX * i, this.height - this.offsetY );
-      ctx.strokeStyle = "grey";
+      ctx.fillText( -Math.floor(this.offsetX / this.scaleX) + i, offsetX + this.scaleX * i, this.height - this.offsetY );
       ctx.stroke();
     }
   };
