@@ -1,15 +1,26 @@
 <html>
 <head>
+  <style>
+    #inputbar{
+      position: fixed;
+      width:100%;
+      bottom: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+    #inputbar > input{
+      line-height: 2em;
+      font-size: 2em;
+    }
+  </style>
 </head>
 <body>
-<h1>Graph:</h1>
-<input type="text" id="eq" />
-<h1>Evaluate:</h1>
-<input type="text" id="eval" />
-<ul id="steps">
 
-</ul>
 <canvas id="graph"></canvas>
+<div id="inputbar">
+  <input type="text" id="eq" />
+</div>
 <script src="lang.js"></script>
 <script src="graph.js"></script>
 <script>
@@ -23,14 +34,6 @@ graphInput.addEventListener("change", function(){
   g.render();
 });
 
-var evalInput = document.getElementById("eval");
-evalInput.addEventListener("change", function(){
-  var text = document.getElementById("eval").value;
-  var variables = {
-    'x' : 3,
-  };
-  evalPostfix(toPostfix(text), variables);
-});
 
 </script>
 </body>
