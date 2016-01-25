@@ -4,6 +4,7 @@ canvas.width = window.innerWidth;
 canvas.height= window.innerHeight;
 
 var graph = function( mcanvas ){
+  this.canvas = mcanvas;
   this.offsetX = mcanvas.width  / 2;
   this.offsetY = mcanvas.height / 2; //center of canvas
   this.width   = mcanvas.width;
