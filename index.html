@@ -1,38 +1,80 @@
 <html>
 <head>
   <style>
-    #inputbar{
+    #sidebar{
+      width: 200px;
       position: fixed;
-      width:100%;
-      bottom: 0px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
+      border-left: 4px solid black;
+      right: 0px;
+      top: 0px;
+      background-color: white;
+      height: 100%;
     }
-    #inputbar > input{
-      line-height: 2em;
+    #add {
+      width: 100%;
+      position: absolute;
+      bottom: 0px;
+      height: 50px;
+      background: grey;
       font-size: 2em;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      border-top: 2px solid black;
     }
   </style>
 </head>
 <body>
 
 <canvas id="graph"></canvas>
-<div id="inputbar">
-  <input type="text" id="eq" />
+<div id="sidebar">
+  <div id="eqns">
+  </div>
+  <div id="add">
+  +
+  </div>
 </div>
 <script src="lang.js"></script>
 <script src="graph.js"></script>
 <script>
-var graphInput = document.getElementById("eq");
+var addButton = document.getElementById("add");
 var canvas = document.getElementById("graph");
 var g = new graph( canvas );
-g.drawGrid();
-graphInput.addEventListener("change", function(){
-  var text = document.getElementById("eq").value;
-  g.addPlot( text );
+g.render();
+var updateSidebar = function(){
+  var equationlist = document.getElementById("eqns");
+  var currentGraphs = g.getPlots();
+  equationlist.innerHTML = '';
+  g.addPlot( '' );
+  for(var i = 0; i < currentGraphs.length; i++){
+    var currentEq = document.createElement('input');
+    var removeEq = document.createElement('button');
+    removeEq.innerHTML = 'remove';
+    removeEq.setAttribute('index',i);
+    removeEq.addEventListener('click', function( e ){
+      var index = e.target.getAttribute('index');
+      g.removePlot( index );
+      g.render();
+      updateSidebar();
+    });
+    currentEq.value = currentGraphs[i];
+    currentEq.setAttribute('index',i);
+    currentEq.addEventListener('change', function( e ){
+      var index = e.target.getAttribute('index');
+      g.plots[index] = e.target.value;
+      g.render();
+    });
+    equationlist.appendChild(currentEq);
+    equationlist.appendChild(removeEq);
+  }
   g.render();
+};
+addButton.addEventListener("click", function(){
+  updateSidebar();
 });
+
+updateSidebar();
 
 
 </script>
