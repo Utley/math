@@ -47,6 +47,33 @@ var updateSidebar = function(){
   }
   g.render();
 };
+
+var dragging = false;
+
+canvas.addEventListener("mousedown", function(){
+  dragging = true;
+});
+canvas.addEventListener("mouseup", function(){
+  dragging = false;
+});
+canvas.addEventListener("wheel", function(event){
+  event.preventDefault();
+  g.offsetX -= event.deltaX;
+  g.offsetY += event.deltaY;
+  g.min += event.deltaX / g.scaleX;
+  g.max += event.deltaX / g.scaleX;
+  g.render(); //default
+});
+canvas.addEventListener("mousemove", function(event){
+  if( dragging ){
+    g.offsetX += event.movementX;
+    g.offsetY -= event.movementY;
+    g.min -= event.movementX / g.scaleX;
+    g.max -= event.movementX / g.scaleX;
+    g.render();
+  }
+});
+
 addButton.addEventListener("click", function(){
   updateSidebar();
 });

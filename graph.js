@@ -3,6 +3,8 @@ var ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height= window.innerHeight;
 
+
+
 var graph = function( mcanvas ){
   this.canvas = mcanvas;
   this.offsetX = mcanvas.width  / 2;
@@ -16,31 +18,6 @@ var graph = function( mcanvas ){
   this.range = this.max - this.min;
   this.scaleX = canvas.width / this.range; //ratio of pixels to mathematical units
   this.scaleY = canvas.width / this.range; //technically wrong but it makes the graph look ok
-  this.dragging = false; //for event listeners
-
-  mcanvas.addEventListener("mousedown", function(){
-    this.dragging = true;
-  });
-  mcanvas.addEventListener("mouseup", function(){
-    this.dragging = false;
-  });
-  mcanvas.addEventListener("wheel", function(event){
-    event.preventDefault();
-    g.offsetX -= event.deltaX;
-    g.offsetY += event.deltaY;
-    g.min += event.deltaX / g.scaleX;
-    g.max += event.deltaX / g.scaleX;
-    g.render(); //default
-  });
-  mcanvas.addEventListener("mousemove", function(event, that){
-    if( this.dragging ){
-      that.offsetX += event.movementX;
-      that.offsetY -= event.movementY;
-      g.min -= event.movementX / g.scaleX;
-      g.max -= event.movementX / g.scaleX;
-      g.render();
-    }
-  });
 
   //used to java, sorry
   this.addPlot = function( expr ){
