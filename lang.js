@@ -166,24 +166,6 @@ var toPostfix = function( str ){
   return output;
 };
 
-var term = function(){
-  this.coefficient = 1;
-  this.exponent = 1;
-  this.variable = 1;
-  this.divisor = 1;
-  this.clone = function(){
-    var tmp = new term();
-    tmp.coefficient = this.coefficient;
-    tmp.exponent = this.exponent;
-    tmp.variable = this.variable;
-    tmp.divisor = this.divisor;
-    return tmp;
-  };
-  this.at = function( num ){
-    return Math.pow( num, this.exponent ) * this.coefficient / this.divisor;
-  };
-};
-
 var evalFunction = function( expr, variables ){
   return evalPostfix( toPostfix(expr), variables );
 };
