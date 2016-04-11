@@ -84,6 +84,8 @@ var graph = function( mcanvas ){
 
   this.drawGrid = function(){
     ctx.lineWidth = 1;
+    ctx.font = "14px serif";
+    var textOffset = 2;
     ctx.moveTo( 0, this.offsetY );
     var offsetX = this.offsetX % this.scaleX;
     var offsetY = this.offsetY % this.scaleY;
@@ -98,7 +100,7 @@ var graph = function( mcanvas ){
       ctx.moveTo( 0,           this.height + this.scaleY * i - offsetY);
       ctx.lineTo( this.width,  this.height + this.scaleY * i - offsetY);
 
-      ctx.fillText( -Math.floor(this.offsetY / this.scaleY) + i, this.offsetX, this.height - this.scaleY * i - offsetY);
+      ctx.fillText( -Math.floor(this.offsetY / this.scaleY) + i, this.offsetX + textOffset, this.height - this.scaleY * i - offsetY - textOffset);
       ctx.strokeStyle = "grey";
       ctx.stroke();
     }
@@ -113,7 +115,7 @@ var graph = function( mcanvas ){
       ctx.moveTo( offsetX + this.scaleX * i, 0           );
       ctx.lineTo( offsetX + this.scaleX * i, this.height );
 
-      ctx.fillText( -Math.floor(this.offsetX / this.scaleX) + i, offsetX + this.scaleX * i, this.height - this.offsetY );
+      ctx.fillText( -Math.floor(this.offsetX / this.scaleX) + i, offsetX + this.scaleX * i + textOffset, this.height - this.offsetY - textOffset);
       ctx.stroke();
     }
   };
